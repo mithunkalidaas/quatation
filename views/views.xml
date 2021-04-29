@@ -1,0 +1,94 @@
+<odoo>
+  <data>
+    <record id="model_name_view_form" model="ir.ui.view">
+      <field name="name">model.name.view.form</field>
+      <field name="model">quatation.quatation</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="cadrs" />
+              <field name="cph" />
+            </group>
+            <notebook>
+              <page string="Bill Details">
+                <field name="orderid">
+                  <tree>
+                    <field name="oid"/>
+                    <field name="pname"/>
+                    <field name="pbrand"/>
+                    <field name="quantity"/>
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+            <notebook>
+              <page string="Listings of products">
+                <field name="prdlist"/>
+                <tree>
+                  <field name="pno"/>
+                </tree>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="quatation.list">
+      <field name="name">quatation list</field>
+      <field name="model">quatation.quatation</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="cadrs"/>
+          <field name="cph"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="quatation.action_window">
+      <field name="name">quatation window</field>
+      <field name="res_model">quatation.quatation</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.server" id="quatation.action_server">
+      <field name="name">quatation server</field>
+      <field name="model_id" ref="model_quatation_quatation"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="quatation" id="quatation.menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Menu 1" id="quatation.menu_1" parent="quatation.menu_root"/>
+    <menuitem name="Menu 2" id="quatation.menu_2" parent="quatation.menu_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="List" id="quatation.menu_1_list" parent="quatation.menu_1"
+              action="quatation.action_window"/>
+    <menuitem name="Server to list" id="quatation" parent="quatation.menu_2"
+              action="quatation.action_server"/>
+
+  </data>
+</odoo>
